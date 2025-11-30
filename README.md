@@ -17,7 +17,9 @@ The system includes a hold-to-type feature that adds a letter to a sentence when
 - Fully offline\
 \
 \
-![ASL Photo](ASL_Alphabet.png)
+![ASL Photo](ASL_Alphabet.png)\
+\
+(Show Backwards Palm for a space.)
 
 
 ---------------------------------------------------------------------
