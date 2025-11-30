@@ -25,16 +25,17 @@ The system includes a hold-to-type feature that adds a letter to a sentence when
 ---------------------------------------------------------------------
 
 ## 📁 Project Structure
-
+```
 (project folder)
-    collect_imgs.py
-    create_dataset.py
-    train_classifier.py
-    inference_classifier.py
+    collect_imgs.py\
+    create_dataset.py\
+    train_classifier.py\
+    inference_classifier.py\
     data/
     model.p
     data.pickle
     README.md
+```
 
 ---------------------------------------------------------------------
 
@@ -51,17 +52,18 @@ You must collect and train your own, for privacy reasons.
 ## 🔧 Installation
 
 Run inside your virtual environment:
-
+```
     pip install opencv-python mediapipe scikit-learn numpy matplotlib
+```
 
 ---------------------------------------------------------------------
 
 ## 🧪 Step 1: Collect Your Dataset
 
 Start the collector:
-
+```
     python collect_imgs.py
-
+```
 Instructions:
 - A camera preview opens
 - For each class (0–25), press Q to capture images
@@ -79,9 +81,9 @@ optional 26 = space
 ## ✍️ Step 2: Create Dataset (Landmark Extraction)
 
 Run:
-
+```
     python create_dataset.py
-
+```
 This script:
 - Processes all images
 - Extracts MediaPipe hand landmarks
@@ -93,9 +95,9 @@ This script:
 ## 🤖 Step 3: Train Your Model
 
 Run:
-
+```
     python train_classifier.py
-
+```
 This:
 - Loads data.pickle
 - Trains Random Forest classifier
@@ -106,18 +108,18 @@ This:
 ## 🎥 Step 4: Real-Time Inference (Hold-To-Type)
 
 Run:
-
+```
     python inference_classifier.py
-
+```
 Features:
 - Displays predicted letter above bounding box
 - Hold letter for 2 seconds → it gets added to a sentence
 - Press Q to quit
 
 Adjust hold time inside the script:
-
+```
     HOLD_TIME = 2.0
-
+```
 ---------------------------------------------------------------------
 
 ## 📚 How It Works (Technical Overview)
