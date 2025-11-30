@@ -14,7 +14,9 @@ The system includes a hold-to-type feature that adds a letter to a sentence when
 - Trainable custom model
 - Hold a hand sign for 2 seconds to type it
 - On-screen sentence display
-- Fully offline
+- Fully offline\
+\
+\
 ![ASL Photo](ASL_Alphabet.png)
 
 
