@@ -1,186 +1,147 @@
-# ASL Hand-Sign Recognition (Custom Dataset + Hold-to-Type System)
+# ASL Hand-Sign Recognition (Custom Dataset + Hold-To-Type Input)
 
-This project is an American Sign Language hand-sign recognition system built with MediaPipe, OpenCV, and a Random Forest classifier.
+This project is a real-time American Sign Language hand-sign recognition system.
+It uses MediaPipe Hands, OpenCV, and a Random Forest classifier to detect hand landmarks and classify them into letters A–Z.
+The system includes a hold-to-type feature that adds a letter to a sentence when held for a fixed duration.
 
-It includes:
-- Dataset collector (captures images for A–Z)
-- Feature extractor (MediaPipe hand landmarks → normalized data)
-- Model trainer
-- Real-time inference program with:
-  - Letter detection
-  - Hold-to-type system
-  - On-screen sentence building
+---------------------------------------------------------------------
 
-You must create your own dataset and your own model because mine contains my face and hands.
+## ✨ Features
 
----
+- Real-time ASL letter prediction
+- MediaPipe hand landmark detection
+- Normalized landmark feature extraction
+- Trainable custom model
+- Hold a hand sign for 2 seconds to type it
+- On-screen sentence display
+- Fully offline
+![ASL](ASL_alphabet.png)
 
-## 📸 Example ASL Image  
-You can add your own example image here later:
 
-![ASL Example](images/your_image_here.jpg)
-
----
+---------------------------------------------------------------------
 
 ## 📁 Project Structure
-```
-project/
-│-- collect_imgs.py
-│-- create_dataset.py
-│-- train_classifier.py
-│-- inference_classifier.py
-│-- data/
-│-- model.p
-│-- data.pickle
-│-- README.md
-```
 
----
+(project folder)
+    collect_imgs.py
+    create_dataset.py
+    train_classifier.py
+    inference_classifier.py
+    data/
+    model.p
+    data.pickle
+    README.md
 
-## 🔧 Requirements
+---------------------------------------------------------------------
 
-Install dependencies:
-```
-pip install opencv-python mediapipe scikit-learn numpy matplotlib
-```
+## ⚠️ Important
 
----
+This repository does NOT include:
+- a dataset  
+- a trained model  
 
-## 🧪 Create Virtual Environment (recommended)
+You must collect and train your own, for privacy reasons.
 
-### Create venv
-```
-python -m venv venv
-```
+---------------------------------------------------------------------
 
-### Activate
-Windows:
-```
-venv\Scripts\activate
-```
+## 🔧 Installation
 
-macOS / Linux:
-```
-source venv/bin/activate
-```
+Run inside your virtual environment:
 
-### Freeze for GitHub
-```
-pip freeze > requirements.txt
-```
+    pip install opencv-python mediapipe scikit-learn numpy matplotlib
 
-### .gitignore
-```
-venv/
-```
+---------------------------------------------------------------------
 
----
+## 🧪 Step 1: Collect Your Dataset
 
-## 📸 Step 1: Collect Your Dataset
+Start the collector:
+
+    python collect_imgs.py
+
+Instructions:
+- A camera preview opens
+- For each class (0–25), press Q to capture images
+- Images save to: data/<class_number>/
+
+Mapping:
+0 = A  
+1 = B  
+...  
+25 = Z  
+optional 26 = space
+
+---------------------------------------------------------------------
+
+## ✍️ Step 2: Create Dataset (Landmark Extraction)
 
 Run:
-```
-python collect_imgs.py
-```
 
-For each class (0–25):
-- Live preview appears
-- Press Q to start capturing
-- Script saves images into /data/<class_number>/
+    python create_dataset.py
 
-Class → Letter map:
-0=A … 25=Z  
-Optional: 26 = space
+This script:
+- Processes all images
+- Extracts MediaPipe hand landmarks
+- Normalizes landmarks
+- Saves dataset to data.pickle
 
----
+---------------------------------------------------------------------
 
-## ✍ Step 2: Create Dataset (Extract Landmarks)
+## 🤖 Step 3: Train Your Model
 
 Run:
-```
-python create_dataset.py
-```
 
-Produces:
-- `data.pickle`
+    python train_classifier.py
 
----
+This:
+- Loads data.pickle
+- Trains Random Forest classifier
+- Exports model.p
 
-## 🤖 Step 3: Train the Model
+---------------------------------------------------------------------
 
-Run:
-```
-python train_classifier.py
-```
-
-Outputs:
-- `model.p`
-
----
-
-## 🎥 Step 4: Real-Time Inference (Hold-to-Type)
+## 🎥 Step 4: Real-Time Inference (Hold-To-Type)
 
 Run:
-```
-python inference_classifier.py
-```
+
+    python inference_classifier.py
 
 Features:
-- Detects ASL letters live  
-- Draws landmarks + bounding box  
-- Shows predicted letter  
-- Hold a letter for 2 seconds to type it  
-- “Typed sentence” shown at bottom  
-- Press Q to quit  
+- Displays predicted letter above bounding box
+- Hold letter for 2 seconds → it gets added to a sentence
+- Press Q to quit
 
-Adjust hold time:
-```
-HOLD_TIME = 2.0
-```
+Adjust hold time inside the script:
 
----
+    HOLD_TIME = 2.0
 
-## 🖼 Add Your ASL Image to README
+---------------------------------------------------------------------
 
-Create folder:
-```
-images/
-```
+## 📚 How It Works (Technical Overview)
 
-Add file:
-```
-images/asl.jpg
-```
+1. MediaPipe generates 21 hand landmarks.
+2. For each landmark → extract x and y.
+3. Normalize values relative to minimum x/y.
+4. Create a 42-length feature vector.
+5. Model predicts the corresponding letter.
+6. In inference:
+   - Track if prediction stays the same
+   - If stable long enough → commit to sentence
 
-Insert into README:
-```
-![ASL Example](images/asl.jpg)
-```
 
----
+---------------------------------------------------------------------
 
-## 🧭 How to Upload to GitHub Using VS Code
+## 🤝 Contributions
 
-1. Open project folder in VS Code  
-2. Click Source Control  
-3. Click “Initialize Repository”  
-4. Stage all files  
-5. Write a commit message  
-6. Click ✓ Commit  
-7. Click “Publish Branch”  
-8. Choose Public or Private  
+Possible improvements:
+- Add numbers 0–9
+- Support for ASL words
+- GUI interface
+- Text-to-speech output
+- Better ML model
 
----
+---------------------------------------------------------------------
 
-## 🧼 Suggested .gitignore
-```
-venv/
-__pycache__/
-*.pickle
-*.p
-*.mp4
-data/
-model.p
-```
+## 🙌 Notes
 
----
+This project is for learning and experimentation.
+It is NOT a certified ASL interpretation system.
