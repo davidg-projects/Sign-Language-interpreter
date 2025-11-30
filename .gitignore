@@ -1,0 +1,6 @@
+*.log
+myvenv/
+data/
+data.pickle/
+model.p/
+sklearn-env
